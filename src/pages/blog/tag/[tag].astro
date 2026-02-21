@@ -1,0 +1,63 @@
+---
+import Base from '../../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const allPosts = await getCollection('blog', ({ data }) => !data.draft);
+  const tags = new Set<string>();
+  for (const post of allPosts) {
+    for (const tag of post.data.tags ?? []) {
+      tags.add(tag);
+    }
+  }
+
+  return [...tags].map((tag) => ({
+    params: { tag },
+    props: {
+      tag,
+      posts: allPosts
+        .filter((p) => p.data.tags?.includes(tag))
+        .sort((a, b) => {
+          const dateA = a.data.date?.getTime() ?? 0;
+          const dateB = b.data.date?.getTime() ?? 0;
+          return dateB - dateA;
+        }),
+    },
+  }));
+}
+
+const { tag, posts } = Astro.props;
+---
+
+<Base title={`#${tag}`} description={`All posts tagged with "${tag}".`}>
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 py-12 md:py-20">
+    <header class="mb-10">
+      <a href="/blog" class="text-sm text-zinc-500 hover:text-accent no-underline mb-4 inline-block">&larr; All posts</a>
+      <h1 class="text-3xl md:text-4xl font-bold text-zinc-100 mb-2">
+        <span class="text-accent">#</span>{tag}
+      </h1>
+      <p class="text-zinc-500">{posts.length} post{posts.length !== 1 ? 's' : ''}</p>
+    </header>
+
+    <div class="space-y-1">
+      {posts.map((post) => (
+        <a
+          href={`/blog/${post.slug}`}
+          class="group flex items-baseline justify-between gap-4 py-3 px-3 -mx-3 rounded-lg hover:bg-surface-1 transition-colors no-underline"
+        >
+          <div class="min-w-0">
+            <h3 class="text-base font-medium text-zinc-200 group-hover:text-accent transition-colors truncate">
+              {post.data.title}
+            </h3>
+            <p class="text-sm text-zinc-500 truncate mt-0.5">{post.data.description}</p>
+          </div>
+          {post.data.date && (
+            <time class="text-xs text-zinc-600 whitespace-nowrap flex-shrink-0" datetime={post.data.date.toISOString()}>
+              {post.data.date.toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}
+            </time>
+          )}
+        </a>
+      ))}
+    </div>
+  </div>
+</Base>
