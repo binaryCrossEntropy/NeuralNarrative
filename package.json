@@ -1,7 +1,7 @@
 {
   "name": "neuralnarrative",
   "type": "module",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
@@ -10,37 +10,20 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/markdoc": "^0.11.3",
+    "@astrojs/mdx": "^3.1.2",
     "@astrojs/react": "^3.6.0",
-    "@astrojs/sitemap": "^3.1.6",
-    "@astrojs/starlight": "^0.25.2",
-    "@astrojs/starlight-tailwind": "^2.0.3",
     "@astrojs/tailwind": "^5.1.0",
-    "@fontsource-variable/playwrite-es-deco": "^5.0.1",
-    "@fontsource/londrina-shadow": "^5.0.19",
-    "@fontsource/press-start-2p": "^5.0.20",
-    "@fontsource/rampart-one": "^5.0.19",
-    "@nextui-org/react": "^2.2.9",
-    "@radix-ui/react-slot": "^1.0.2",
     "@tailwindcss/typography": "^0.5.10",
     "@types/react": "^18.2.39",
     "@types/react-dom": "^18.2.17",
     "astro": "^4.12.2",
-    "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
-    "embla-carousel-react": "^8.0.0-rc18",
-    "framer-motion": "^10.18.0",
-    "lottie-react": "^2.4.0",
-    "lucide-react": "^0.303.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-draggable": "^4.4.6",
     "rehype-mathjax": "^5.0.0",
     "remark-math": "^6.0.0",
     "sharp": "^0.32.5",
-    "starlight-image-zoom": "^0.7.0",
     "tailwind-merge": "^2.4.0",
-    "tailwindcss": "^3.4.0",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss": "^3.4.0"
   }
 }

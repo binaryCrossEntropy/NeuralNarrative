@@ -1,138 +1,130 @@
-.content ul {
-    list-style-type: disc;
-}
-.fixed-image {
-    position: fixed;
-    right: -1;
-    bottom: 0;
-    width: 20%; /* Example: width as a percentage of the viewport width */
-    z-index: 1000;
-    border-radius: 15px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    padding-top: 11.25%;
-    margin: 0; 
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
 
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-
-.fixed-image img {
-    width: 50%;
-    height: auto;
-    display: block;
-    border-radius: 15px;
-}
-
-h2 {
-    position: relative;
-    padding-right: 20px; /* Adjust padding to fit the gradient border */
-    border-right: 3px solid transparent; /* Initial border set to transparent */
-    background-clip: text;
-    -webkit-background-clip: text;
-    color: transparent; /* Make the text color transparent to show the background */
-    transition: all 0.3s ease;/* Smooth transition for the border and text color */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    color-scheme: dark;
   }
-  
-  h2::after {
-    content: '';
-    position: absolute;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    width: 0;
-    background: linear-gradient(to bottom, #ffa500, #ff4500); /* Gradient from orange to red-orange */
-    transition: width 0.3s ease; /* Transition for the 'after' pseudo-element */
+
+  body {
+    @apply bg-surface-0 text-zinc-300 font-sans antialiased;
+    line-height: 1.7;
   }
-  
-  h2:hover {
-    background: linear-gradient(45deg, #f3ec78, #af4261);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent; /* This makes the text itself transparent, showing the gradient background */
-}
 
-  
-  h2:hover::after {
-    width: 3px; /* Width of the right border on hover */
+  ::selection {
+    @apply bg-accent/30 text-white;
   }
-  h1:hover {
-    background: linear-gradient(45deg, #f5f5dc, #deb887); /* Two shades of beige */
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent; /* This makes the text itself transparent, showing the gradient background */
-}
 
-@keyframes typing {
-    from { width: 0; }
-    to { width: 100%; }
+  h1, h2, h3, h4, h5, h6 {
+    @apply text-zinc-100 font-semibold leading-tight;
   }
-  
-  @keyframes blink-caret {
-    from, to { border-color: transparent; }
-    50% { border-color: black; }
+
+  h1 { @apply text-3xl md:text-4xl; }
+  h2 { @apply text-2xl md:text-3xl; }
+  h3 { @apply text-xl md:text-2xl; }
+  h4 { @apply text-lg md:text-xl; }
+
+  a {
+    @apply text-accent hover:text-accent-light transition-colors duration-200;
   }
-  
 
-  
-  /* Optional: Adjust font and size */
-  h1{
-    /* font-family: 'Courier New', Courier, monospace; */
-    font-size: 2em;
+  code {
+    @apply font-mono text-sm;
   }
-  .hero {
-    padding-top: 0;
+
+  :not(pre) > code {
+    @apply bg-surface-3 text-accent-light px-1.5 py-0.5 rounded;
+  }
 }
 
-
-.container img{
-  /* margin: 100px; */
-  cursor:zoom-in;
-  z-index: 100; 
+/* Prose overrides for blog content */
+.prose {
+  @apply text-zinc-300 max-w-none;
 }
 
-input[type=checkbox]{
-  display:none;
-}
-input[type=checkbox]:checked ~ label > img
-{
-  transform:scale(1.5);
-  cursor:zoom-out;
-  transition:transform 1s ease;
-  z-index: 999;
+.prose h2 {
+  @apply text-zinc-100 border-b border-surface-4 pb-2 mt-12 mb-4;
 }
 
-.formatter svg{
-  display: inline !important;
+.prose h3 {
+  @apply text-zinc-100 mt-8 mb-3;
 }
 
-.sidebar-pane{
-  z-index: 0 !important;
-
+.prose a {
+  @apply text-accent hover:text-accent-light underline underline-offset-2;
 }
 
-.main-pane{
-  z-index:10;
-}
-.right-sidebar-container{
-  z-index: 5 !important;
+.prose strong {
+  @apply text-zinc-100;
 }
 
-.header{
-  z-index:15;
+.prose blockquote {
+  @apply border-l-2 border-accent/40 bg-surface-1 pl-4 py-2 italic text-zinc-400;
 }
 
-
-
-.transformer_image {
-  display: flex;
-  justify-content: center;
-  align-items: center; /* Center the image vertically */
-  z-index:100;
+.prose pre {
+  @apply bg-surface-1 border border-surface-4 rounded-lg p-4 overflow-x-auto;
 }
 
-.transformer_image label {
-  cursor: pointer; /* Change cursor to indicate zoom action */
-  display: block;
-  max-width: 40%; /* Set the max width to 50% */
-  max-height: 40%; /* Set the max height to 50% */
+.prose code {
+  @apply text-sm;
+}
+
+.prose img {
+  @apply rounded-lg border border-surface-4 mx-auto;
+}
+
+.prose ul {
+  @apply list-disc pl-6 space-y-1;
+}
+
+.prose ol {
+  @apply list-decimal pl-6 space-y-1;
+}
+
+.prose details {
+  @apply bg-surface-1 border border-surface-4 rounded-lg p-4 my-4;
+}
+
+.prose details summary {
+  @apply cursor-pointer text-accent font-medium;
+}
+
+.prose table {
+  @apply w-full border-collapse;
+}
+
+.prose th {
+  @apply bg-surface-2 text-zinc-100 text-left p-3 border border-surface-4;
+}
+
+.prose td {
+  @apply p-3 border border-surface-4;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-surface-0;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-surface-4 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-zinc-600;
+}
+
+/* MathJax styling */
+mjx-container {
+  @apply overflow-x-auto py-2;
 }

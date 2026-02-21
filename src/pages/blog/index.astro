@@ -1,0 +1,64 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+
+const allPosts = await getCollection('blog', ({ data }) => !data.draft);
+
+// Group by category
+const categories = new Map<string, typeof allPosts>();
+for (const post of allPosts) {
+  const cat = post.data.category || 'Uncategorized';
+  if (!categories.has(cat)) categories.set(cat, []);
+  categories.get(cat)!.push(post);
+}
+
+// Sort categories and posts within
+const sortedCategories = [...categories.entries()].sort(([a], [b]) => a.localeCompare(b));
+for (const [, posts] of sortedCategories) {
+  posts.sort((a, b) => {
+    const dateA = a.data.date?.getTime() ?? 0;
+    const dateB = b.data.date?.getTime() ?? 0;
+    return dateB - dateA;
+  });
+}
+---
+
+<Base title="Blog" description="Technical deep dives into ML systems, transformer architectures, inference optimization, and production AI.">
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 py-12 md:py-20">
+    <header class="mb-12">
+      <span class="text-xs font-semibold tracking-widest uppercase text-zinc-600 mb-4 block">Blog</span>
+      <h1 class="text-3xl md:text-4xl font-bold text-zinc-100 mb-3">Technical deep dives.</h1>
+      <p class="text-zinc-400">
+        Articles on transformer architectures, model quantization, inference optimization, and the systems behind production AI.
+      </p>
+    </header>
+
+    {sortedCategories.map(([category, posts]) => (
+      <section class="mb-12">
+        <h2 class="text-sm font-semibold tracking-widest uppercase text-accent mb-4 border-b border-surface-3 pb-2">
+          {category}
+        </h2>
+        <div class="space-y-1">
+          {posts.map((post) => (
+            <a
+              href={`/blog/${post.slug}`}
+              class="group flex items-baseline justify-between gap-4 py-3 px-3 -mx-3 rounded-lg hover:bg-surface-1 transition-colors no-underline"
+            >
+              <div class="min-w-0">
+                <h3 class="text-base font-medium text-zinc-200 group-hover:text-accent transition-colors truncate">
+                  {post.data.title}
+                </h3>
+                <p class="text-sm text-zinc-500 truncate mt-0.5">{post.data.description}</p>
+              </div>
+              {post.data.date && (
+                <time class="text-xs text-zinc-600 whitespace-nowrap flex-shrink-0" datetime={post.data.date.toISOString()}>
+                  {post.data.date.toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}
+                </time>
+              )}
+            </a>
+          ))}
+        </div>
+      </section>
+    ))}
+  </div>
+</Base>

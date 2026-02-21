@@ -23,3 +23,6 @@ pnpm-debug.log*
 # IDE-specific files
 .vscode/
 .vercel
+
+# Future architecture plans (contains internal infra details — not public yet)
+future.md
