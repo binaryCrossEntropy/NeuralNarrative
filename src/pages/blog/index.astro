@@ -49,6 +49,15 @@ for (const [, posts] of sortedCategories) {
                   {post.data.title}
                 </h3>
                 <p class="text-sm text-zinc-500 truncate mt-0.5">{post.data.description}</p>
+                {post.data.tags && post.data.tags.length > 0 && (
+                  <div class="flex flex-wrap gap-1.5 mt-1.5">
+                    {post.data.tags.map((tag) => (
+                      <a href={`/blog/tag/${tag}`} class="text-[10px] px-1.5 py-0.5 bg-surface-3 text-zinc-500 rounded hover:bg-accent/10 hover:text-accent transition-colors no-underline" onclick="event.stopPropagation()">
+                        #{tag}
+                      </a>
+                    ))}
+                  </div>
+                )}
               </div>
               {post.data.date && (
                 <time class="text-xs text-zinc-600 whitespace-nowrap flex-shrink-0" datetime={post.data.date.toISOString()}>
